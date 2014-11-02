@@ -60,13 +60,18 @@ public class DynamicPageAct {
 		FrontUtils.frontData(request, model, site);
 		//带有其他路径则是非法请求
 		String uri=URLHelper.getURI(request);
+//		log.info(uri);
+		System.out.println("123"+uri);
+		System.out.println("xxx"+site.getTplIndexOrDef());
 		if(StringUtils.isNotBlank(uri)&&!uri.equals("/")){
 			return FrontUtils.pageNotFound(request, response, model);
 		}
 		//使用静态首页而且静态首页存在
 		if(site.getStaticIndex()&&new File(realPathResolver.get(site.getStaticDir()+INDEX)).exists()){
+			System.out.println(uri);
 			return FrontUtils.getTplPath("", site.getStaticDir(), INDEX);
 		}else{
+			System.out.println("test");
 			return site.getTplIndexOrDef();
 		}
 	}
@@ -97,6 +102,9 @@ public class DynamicPageAct {
 		PageInfo info = URLHelper.getPageInfo(request);
 		String[] paths = URLHelper.getPaths(request);
 		int len = paths.length;
+		for(int i = 0; i < paths.length; i++){
+			System.out.println("ccc"+paths[i]);
+		}
 		if (len == 1) {
 			// 单页
 			return channel(paths[0],true, pageNo, params, info, request, response,
